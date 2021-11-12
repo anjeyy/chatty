@@ -2,6 +2,8 @@ name: Publish Docker images
 on:
   push:
     branches: [ main ]
+    tags:
+      - '*'
   pull_request:
     branches: [ main ]
     types: [ opened, synchronize, reopened, closed ]
@@ -44,11 +46,31 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
+  determine-version:
+    name: determine git tag
+    runs-on: ubuntu-latest
+
+    #    if: github.event_name == 'push' && github.ref == 'refs/tags/*'
+    steps:
+      - name: determine git version
+        run: |
+          echo pipeline triggered by branch [${GITHUB_REF##*/}]
+          echo ${{ github.event_name }}
+          echo ${{ github.ref }}
+          if [ ${{ github.ref }} == 'refs/tags/*' && ${GITHUB_REF##*/} == 'merge' ]
+          then
+            echo --- tagged branch detected ---
+          else
+            echo --- untagged branch detected ---
+          fi
+      #todo save version as artifact in a txt file!
+
   push-server-to-registry:
     name: Docker Build & Push Server
     runs-on: ubuntu-latest
     needs:
       - build-jar
+      - determine-version
 
     #    if: github.event.pull_request.merged
     steps:
