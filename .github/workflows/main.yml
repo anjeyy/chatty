@@ -72,15 +72,15 @@ jobs:
 
       - name: Create directory and copy artifacts
         run: |
-          mkdir -p target
-          cp path/to/artifact/server*.jar target
-          ls -la target
+          mkdir -p server/target
+          cp path/to/artifact/server*.jar server/target
+          ls -la server/target
 
       - name: Build & Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./docker/Dockerfile
+          context: ./server
+          file: ./server/Dockerfile
           tags: anjeyy/unbendable:chatty-server-latest
           pull: true
           push: true
