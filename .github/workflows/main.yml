@@ -97,10 +97,18 @@ jobs:
           cp path/to/artifact/server*.jar server/target
           ls -la server/target
 
-      - name: Get the tag name
+      - name: Determine Docker Tag
         run: |
           echo pipeline triggered by branch [${GITHUB_REF##*/}]
           echo shortcut -- ${GITHUB_REF/refs\/tags\//}
+          TEST_TAG=v0.01.0
+          TAG_REGEX="^v.+"
+          if [[ $TEST_TAG =~ TAG_REGEX ]]
+          then
+            echo --- tagged branch detected ---
+          else
+            echo --- untagged branch detected ---
+          fi
           echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
       - name: Build & Push to Docker Hub
