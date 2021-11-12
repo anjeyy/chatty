@@ -12,6 +12,6 @@ public class EntryPoint implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Raw {}", args);
+        System.out.println("Starting perichat - real time chat application..");
     }
 }

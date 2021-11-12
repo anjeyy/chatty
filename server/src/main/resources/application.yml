@@ -17,3 +17,6 @@ management:
 logging:
   file:
     name: ./log/${spring.application.name}
+  level:
+    root: ERROR
+    com.github.anjeyy.server: INFO

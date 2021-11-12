@@ -8,3 +8,5 @@ spring:
 logging:
   file:
     name: ./log/${spring.application.name}
+  level:
+    root: ERROR
