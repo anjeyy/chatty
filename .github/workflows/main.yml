@@ -70,7 +70,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build-jar
-      - determine-version
 
     #    if: github.event.pull_request.merged
     steps:
