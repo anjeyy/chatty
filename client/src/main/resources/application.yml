@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: chat-client
+  main:
+    web-application-type: none
+    banner-mode: off
+
+logging:
+  file:
+    name: ./log/${spring.application.name}

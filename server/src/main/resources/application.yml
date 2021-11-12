@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: chat-server
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,startup
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  file:
+    name: ./log/${spring.application.name}
