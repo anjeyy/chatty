@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
     tags:
-      - '*'
+      - 'v*'
   pull_request:
     branches: [ main ]
     types: [ opened, synchronize, reopened, closed ]
@@ -46,24 +46,24 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  determine-version:
-    name: determine git tag
-    runs-on: ubuntu-latest
-
-    #    if: github.event_name == 'push' && github.ref == 'refs/tags/*'
-    steps:
-      - name: determine git version
-        run: |
-          echo pipeline triggered by branch [${GITHUB_REF##*/}]
-          echo ${{ github.event_name }}
-          echo ${{ github.ref }}
-          if [ ${{ github.ref }} == 'refs/tags/*' && ${GITHUB_REF##*/} == 'merge' ]
-          then
-            echo --- tagged branch detected ---
-          else
-            echo --- untagged branch detected ---
-          fi
-      #todo save version as artifact in a txt file!
+  #  determine-version:
+  #    name: determine git tag
+  #    runs-on: ubuntu-latest
+  #
+  #    #    if: github.event_name == 'push' && github.ref == 'refs/tags/*'
+  #    steps:
+  #      - name: determine git version
+  #        run: |
+  #          echo pipeline triggered by branch [${GITHUB_REF##*/}]
+  #          echo ${{ github.event_name }}
+  #          echo ${{ github.ref }}
+  #          if [ ${{ github.ref }} == 'refs/tags/*' && ${GITHUB_REF##*/} == 'merge' ]
+  #          then
+  #            echo --- tagged branch detected ---
+  #          else
+  #            echo --- untagged branch detected ---
+  #          fi
+  #      #todo save version as artifact in a txt file!
 
   push-server-to-registry:
     name: Docker Build & Push Server
@@ -97,6 +97,12 @@ jobs:
           mkdir -p server/target
           cp path/to/artifact/server*.jar server/target
           ls -la server/target
+
+      - name: Get the tag name
+        run: |
+          echo pipeline triggered by branch [${GITHUB_REF##*/}]
+          echo shortcut -- ${GITHUB_REF/refs\/tags\//}
+          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
       - name: Build & Push to Docker Hub
         uses: docker/build-push-action@v2
