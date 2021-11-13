@@ -9,4 +9,9 @@ logging:
   file:
     name: ./log/${spring.application.name}
   level:
-    root: ERROR
+    root: WARN
+
+websocket:
+  url: ws://localhost:8080/chat
+  destination: /app/chat
+  subscription: /topic/chat
