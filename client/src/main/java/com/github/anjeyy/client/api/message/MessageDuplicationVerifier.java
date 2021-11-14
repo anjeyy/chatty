@@ -1,11 +1,11 @@
-package com.github.anjeyy.client.api;
+package com.github.anjeyy.client.api.message;
 
 import com.github.anjeyy.common.model.dto.ChatMessageDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public enum MessageVerifier {
+public enum MessageDuplicationVerifier {
 
     INSTANCE;
 

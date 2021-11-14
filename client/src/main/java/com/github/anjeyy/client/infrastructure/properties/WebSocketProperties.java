@@ -10,11 +10,21 @@ public class WebSocketProperties {
     private final String url;
     private final String destination;
     private final String subscription;
+    private final int retryAttempts;
+    private final long retryTimeout;
 
-    public WebSocketProperties(String url, String destination, String subscription) {
+    public WebSocketProperties(
+            String url,
+            String destination,
+            String subscription,
+            int retryAttempts,
+            long retryTimeout
+    ) {
         this.url = url;
         this.destination = destination;
         this.subscription = subscription;
+        this.retryAttempts = retryAttempts;
+        this.retryTimeout = retryTimeout;
     }
 
     public String getUrl() {
@@ -27,5 +37,13 @@ public class WebSocketProperties {
 
     public String getSubscription() {
         return subscription;
+    }
+
+    public int getRetryAttempts() {
+        return retryAttempts;
+    }
+
+    public long getRetryTimeout() {
+        return retryTimeout;
     }
 }

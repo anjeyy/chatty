@@ -1,12 +1,14 @@
 package com.github.anjeyy.client.infrastructure;
 
-import com.github.anjeyy.client.api.ReceivedMessageProcessor;
+import com.github.anjeyy.client.api.message.ReceivedMessageProcessor;
+import com.github.anjeyy.client.infrastructure.exception.RetryableConnectionException;
 import com.github.anjeyy.client.infrastructure.properties.WebSocketProperties;
 import com.github.anjeyy.common.model.dto.ChatMessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.stomp.*;
 import org.springframework.stereotype.Component;
+import javax.websocket.DeploymentException;
 import java.lang.reflect.Type;
 
 @Component
@@ -41,16 +43,17 @@ public class ChatStompSessionHandler implements StompSessionHandler {
             byte[] payload,
             Throwable exception
     ) {
-        //todo org.springframework.messaging.simp.stomp.ConnectionLostException: Connection closed -> try periodic reconnect
-        //close connection after some tries
         log.error("Error: ", exception);
-        exception.printStackTrace();
     }
 
     @Override
     public void handleTransportError(StompSession session, Throwable exception) {
         if (exception instanceof ConnectionLostException) {
-            //todo try to reestablish a connection after some time
+            System.out.println(" ~~ Connection to the Chatroom lost. ~~");
+            System.out.println(" ~~ Enter a message trying to reconnect and send that message. ~~");
+            throw new RetryableConnectionException("Connection to server suddenly lost: ", exception);
+        } else if (exception instanceof DeploymentException) {
+            throw new RetryableConnectionException("No connection to server: ", exception);
         }
         log.error("Error: ", exception);
     }
@@ -67,6 +70,4 @@ public class ChatStompSessionHandler implements StompSessionHandler {
         }
         receivedMessageProcessor.process(payload);
     }
-
-    // https://stackoverflow.com/a/37451459/11770752 - ConnectionLostException:
 }

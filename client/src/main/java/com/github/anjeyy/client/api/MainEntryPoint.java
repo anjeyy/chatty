@@ -1,6 +1,7 @@
 package com.github.anjeyy.client.api;
 
 import com.github.anjeyy.client.api.client.CustomWebSocketClient;
+import com.github.anjeyy.client.api.user.UserInputListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,22 +21,23 @@ public class MainEntryPoint implements CommandLineRunner {
     }
 
     @Override
+    @SuppressWarnings("InfiniteLoopStatement")
     public void run(String... args) throws Exception {
         log.info("Starting perichat - real time chat application..");
 
         userInputListener.determineUsername();
 
-        customWebSocketClient.connect();    //todo also in while check, then reestablishing if possible!
-        try {
-            while (true) {
+        customWebSocketClient.connect();
+        while (true) {
+            try {
                 userInputListener.getConvertedMessage()
-                        .ifPresent(m -> customWebSocketClient.send(m));
+                        .ifPresent(customWebSocketClient::send);
+            } catch (Exception e) {
+                log.info("Error occurred: ", e);
+                break;
             }
-        } catch (Exception e) {
-            log.info("Error occurred: ", e);
-        } finally {
-            customWebSocketClient.disconnect();
         }
+        customWebSocketClient.disconnect();
     }
 
 }

@@ -14,6 +14,16 @@
       "name": "websocket.subscription",
       "type": "java.lang.String",
       "description": "Topic to subscribe to - receiving messages from there."
+    },
+    {
+      "name": "websocket.retry-attempts",
+      "type": "java.lang.String",
+      "description": "Max. attempts in retrying to establish a connection with the server."
+    },
+    {
+      "name": "websocket.retry-timeout",
+      "type": "java.lang.String",
+      "description": "Maximum duration waiting, before trying for another retry."
     }
   ]
 }

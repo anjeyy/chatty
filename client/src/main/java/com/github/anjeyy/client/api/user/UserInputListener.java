@@ -1,4 +1,4 @@
-package com.github.anjeyy.client.api;
+package com.github.anjeyy.client.api.user;
 
 import com.github.anjeyy.common.model.dto.ChatMessageDto;
 import org.slf4j.Logger;
@@ -27,7 +27,8 @@ public class UserInputListener {
     }
 
     public void determineUsername() {
-        System.out.println("Before you enter the chat, please enter your name.\n");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        System.out.println("Before you enter the chat, please enter your name.");
         username = scanner.nextLine();
         System.out.printf("Have fun %s, but don't go too wild.%n%n", username);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");

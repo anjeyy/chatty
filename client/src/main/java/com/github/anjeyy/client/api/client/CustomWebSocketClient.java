@@ -1,6 +1,8 @@
 package com.github.anjeyy.client.api.client;
 
-import com.github.anjeyy.client.api.MessageVerifier;
+import com.github.anjeyy.client.api.message.MessageDuplicationVerifier;
+import com.github.anjeyy.client.infrastructure.exception.ChatConnectionException;
+import com.github.anjeyy.client.infrastructure.exception.RetryableConnectionException;
 import com.github.anjeyy.client.infrastructure.properties.WebSocketProperties;
 import com.github.anjeyy.common.model.dto.ChatMessageDto;
 import org.slf4j.Logger;
@@ -33,13 +35,42 @@ public class CustomWebSocketClient {
         this.webSocketProperties = webSocketProperties;
     }
 
+    public void send(ChatMessageDto payload) {
+        if (isConnectionNotEstablished()) {
+            connect();
+        }
+
+        String topicSink = webSocketProperties.getDestination();
+        currentStompSession.send(topicSink, payload);
+        MessageDuplicationVerifier.INSTANCE.addMessage(payload);
+    }
+
     public void connect() {
         if (isConnectionEstablished()) {
             return;
         }
-        String serverUrl = webSocketProperties.getUrl();
-        ListenableFuture<StompSession> websocketConnection = webSocketStompClient.connect(serverUrl, stompSessionHandler);
-        waitForEstablishedConnection(websocketConnection);
+
+        int currentRetryCounter = 0;
+        while (currentRetryCounter < webSocketProperties.getRetryAttempts()) {
+            String serverUrl = webSocketProperties.getUrl();
+            ListenableFuture<StompSession> websocketConnection =
+                    webSocketStompClient.connect(serverUrl, stompSessionHandler);
+            try {
+                waitForEstablishedConnection(websocketConnection);
+                break;
+            } catch (RetryableConnectionException e) {
+                waitForAnotherRetry(currentRetryCounter);
+                currentRetryCounter++;
+            }
+        }
+
+        if (currentRetryCounter == webSocketProperties.getRetryAttempts()) {
+            throw new ChatConnectionException(
+                    String.format("No connection could be established after %d retries.", currentRetryCounter)
+            );
+        }
+        System.out.println(" ~~ Connection to the Chatroom established. ~~");
+        System.out.println(" ~~ Say hi to the others. ~~");
     }
 
     private void waitForEstablishedConnection(ListenableFuture<StompSession> websocketConnection) {
@@ -52,22 +83,25 @@ public class CustomWebSocketClient {
             currentStompSession = websocketConnection.get();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            e.printStackTrace();
-            throw new RuntimeException("EEE");  //todo appropriate exceptions
+            throw new RetryableConnectionException("An error regarding threads occurred: ", e);
         } catch (ExecutionException e) {
-            e.printStackTrace();
-            throw new RuntimeException("EEE");
+            throw new RetryableConnectionException("Connection of chat-server could not be established: ", e);
         }
     }
 
-    public void send(ChatMessageDto payload) {
-        if (isConnectionNotEstablished()) {
-            return;
+    private void waitForAnotherRetry(int currentAttempt) {
+        try {
+            System.out.printf(
+                    "Waiting %d s for another retry.. (%d/%d)\n",
+                    webSocketProperties.getRetryTimeout() / 1000,
+                    currentAttempt + 1,
+                    webSocketProperties.getRetryAttempts()
+            );
+            Thread.sleep(webSocketProperties.getRetryTimeout());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new ChatConnectionException("An error regarding threads occurred: ", e);
         }
-
-        String topicSink = webSocketProperties.getDestination();
-        currentStompSession.send(topicSink, payload);
-        MessageVerifier.INSTANCE.addMessage(payload);
     }
 
     public void disconnect() {

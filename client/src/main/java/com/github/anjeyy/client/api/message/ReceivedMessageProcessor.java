@@ -1,4 +1,4 @@
-package com.github.anjeyy.client.api;
+package com.github.anjeyy.client.api.message;
 
 import com.github.anjeyy.common.model.dto.ChatMessageDto;
 import org.slf4j.Logger;
@@ -18,13 +18,13 @@ public class ReceivedMessageProcessor {
             log.warn("Payload with wrong format received: {}", payload);
             return;
         }
-        ChatMessageDto chatMessageDto = (ChatMessageDto) payload;
 
+        ChatMessageDto chatMessageDto = (ChatMessageDto) payload;
         displayMessage(chatMessageDto);
     }
 
     private void displayMessage(ChatMessageDto chatMessageDto) {
-        boolean isMessageFromOwnClient = MessageVerifier.INSTANCE.removeIfPresent(chatMessageDto);
+        boolean isMessageFromOwnClient = MessageDuplicationVerifier.INSTANCE.removeIfPresent(chatMessageDto);
         if (isMessageFromOwnClient) {
             return;
         }
