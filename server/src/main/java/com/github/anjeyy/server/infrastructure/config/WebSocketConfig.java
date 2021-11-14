@@ -1,5 +1,6 @@
 package com.github.anjeyy.server.infrastructure.config;
 
+import com.github.anjeyy.common.annotation.ExcludeFromGeneratedJacocoReport;
 import com.github.anjeyy.common.converter.CustomJackson2MessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSocketMessageBroker
+@ExcludeFromGeneratedJacocoReport
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
