@@ -92,7 +92,7 @@ public class CustomWebSocketClient {
     private void waitForAnotherRetry(int currentAttempt) {
         try {
             System.out.printf(
-                    "Waiting %d s for another retry.. (%d/%d)\n",
+                    "Waiting %d s for another retry.. (%d/%d)%n",
                     webSocketProperties.getRetryTimeout() / 1000,
                     currentAttempt + 1,
                     webSocketProperties.getRetryAttempts()

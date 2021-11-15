@@ -87,11 +87,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.maven.plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/com/github/anjeyy/**/*Application.class</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>coverage-initialize</id>
@@ -119,8 +114,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <!-- todo revert for PR -->
-                                            <minimum>0.0050</minimum>
+                                            <minimum>0.60</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

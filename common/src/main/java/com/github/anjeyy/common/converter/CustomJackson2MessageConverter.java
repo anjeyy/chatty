@@ -1,7 +1,9 @@
 package com.github.anjeyy.common.converter;
 
+import com.github.anjeyy.common.annotation.ExcludeFromGeneratedJacocoReport;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 
+@ExcludeFromGeneratedJacocoReport
 public class CustomJackson2MessageConverter {
 
     private CustomJackson2MessageConverter() {

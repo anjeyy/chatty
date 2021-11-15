@@ -30,7 +30,7 @@ public class MainEntryPoint implements CommandLineRunner {
         customWebSocketClient.connect();
         while (true) {
             try {
-                userInputListener.getConvertedMessage()
+                userInputListener.getInputMessage()
                         .ifPresent(customWebSocketClient::send);
             } catch (Exception e) {
                 log.info("Error occurred: ", e);

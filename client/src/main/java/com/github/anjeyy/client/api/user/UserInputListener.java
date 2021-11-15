@@ -18,7 +18,8 @@ public class UserInputListener {
 
     private String username;
 
-    public Optional<ChatMessageDto> getConvertedMessage() {
+
+    public Optional<ChatMessageDto> getInputMessage() {
         if (username == null) {
             determineUsername();
         }
@@ -29,9 +30,22 @@ public class UserInputListener {
     public void determineUsername() {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("Before you enter the chat, please enter your name.");
-        username = scanner.nextLine();
+        checkForValidUsernameInput();
         System.out.printf("Have fun %s, but don't go too wild.%n%n", username);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    }
+
+    private void checkForValidUsernameInput() {
+        boolean isInvalidUsername = true;
+        while (isInvalidUsername) {
+            String currentUsername = scanner.nextLine();
+            if (!StringUtils.hasText(currentUsername)) {
+                System.out.println("Please re-enter your name.");
+            } else {
+                isInvalidUsername = false;
+                username = currentUsername.trim();
+            }
+        }
     }
 
     private Optional<ChatMessageDto> createFromRawMessage(String rawMessage) {
@@ -40,7 +54,7 @@ public class UserInputListener {
         }
         LocalDateTime localDateTime = createWithAppropriateFormat();
         ChatMessageDto chatMessageDto = new ChatMessageDto(
-                rawMessage,
+                rawMessage.trim(),
                 username,
                 localDateTime
         );

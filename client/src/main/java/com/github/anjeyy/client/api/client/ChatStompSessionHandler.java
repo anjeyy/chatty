@@ -1,4 +1,4 @@
-package com.github.anjeyy.client.infrastructure;
+package com.github.anjeyy.client.api.client;
 
 import com.github.anjeyy.client.api.message.ReceivedMessageProcessor;
 import com.github.anjeyy.client.infrastructure.exception.RetryableConnectionException;

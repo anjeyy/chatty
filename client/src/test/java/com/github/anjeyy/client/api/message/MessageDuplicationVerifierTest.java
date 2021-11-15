@@ -1,6 +1,5 @@
-package com.github.anjeyy.client.api;
+package com.github.anjeyy.client.api.message;
 
-import com.github.anjeyy.client.api.message.MessageDuplicationVerifier;
 import com.github.anjeyy.common.model.dto.ChatMessageDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
