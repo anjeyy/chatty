@@ -18,5 +18,5 @@ logging:
   file:
     name: ./log/${spring.application.name}
   level:
-    root: ERROR
+    root: INFO
     com.github.anjeyy.server: INFO

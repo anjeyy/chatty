@@ -10,6 +10,7 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
+        <module>common</module>
         <module>server</module>
         <module>client</module>
     </modules>
@@ -43,6 +44,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
 
         <!-- Test -->
         <dependency>
@@ -70,26 +79,6 @@
 
     <build>
         <plugins>
-            <!-- Necessary for executable/deployable jar File -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <release>${java.version}</release>
-                </configuration>
-            </plugin>
             <!--
             JaCoCo - Test Coverage
                 https://dzone.com/articles/reporting-code-coverage-using-maven-and-jacoco-plu
@@ -98,11 +87,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.maven.plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/com/github/anjeyy/**/*Application.class</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>coverage-initialize</id>
@@ -130,7 +114,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.50</minimum>
+                                            <minimum>0.60</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
