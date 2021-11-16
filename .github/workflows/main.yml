@@ -99,6 +99,7 @@ jobs:
 
       - name: Setup testing environment
         run: |
+          chmod a+rwx integration-test.sh
           ./integration-test.sh
           #          docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
           #          sleep 10s
