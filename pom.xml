@@ -23,7 +23,7 @@
 
     <properties>
         <!-- basic -->
-        <revision>0.01.1-SNAPSHOT</revision>
+        <revision>0.01.1</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
