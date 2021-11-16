@@ -66,6 +66,7 @@ verifyMessage "~~ Connection to the Chatroom lost. ~~" chatty-client
 verifyMessage "~~ Enter a message trying to reconnect and send that message. ~~" chatty-client
 sendMessageViaClient "trigger reconnect" chatty-client
 docker start chatty-server
+sleep 5s
 
 # then
 docker logs chatty-client
@@ -74,4 +75,6 @@ verifyMessage "Waiting 2 s for another retry.. (1/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (2/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (3/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (4/5)" chatty-client
+verifyMessage "~~ Connection to the Chatroom established. ~~" chatty-client
+verifyMessage "~~ Say hi to the others. ~~" chatty-client
 
