@@ -56,7 +56,12 @@ createAndStartClient chatty-client
 
 setUsernameForClient "automated user 1" chatty-client
 
-sleep 10s
+sleep 1.5s
+docker logs chatty-client
+
+createAndStartServer
+
+sleep 5s
 docker logs chatty-client
 
 #setUsernameForClient "automated user 2" chatty-client-two
