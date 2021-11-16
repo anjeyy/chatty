@@ -47,45 +47,6 @@ function verifySentMessage() {
     fi
 }
 
-### connect two clients and display message ###
-## create server
-#
-## create first client
-#docker run -d --name chatty-client-one --network="host" -it anjeyy/chatty:client-latest
-#sleep 10s
-#docker logs chatty-client-one
-## create second client
-#docker run -d --name chatty-client-two --network="host" -it anjeyy/chatty:client-latest
-#sleep 10s
-#docker logs chatty-client-two
-
-# simulate user input - setting username
-#docker exec chatty-client-one echo "automated user 1" | socat EXEC:"docker attach chatty-client-one",pty STDIN
-#docker logs chatty-client-one
-#
-#docker exec chatty-client-two echo "automated user 2" | socat EXEC:"docker attach chatty-client-two",pty STDIN
-#docker logs chatty-client-two
-#
-#sleep 5s
-
-## simulate chatting with each other and receiving messages
-#docker exec chatty-client-one echo "automated message - yeah" | socat EXEC:"docker attach chatty-client-one",pty STDIN
-#docker logs chatty-client-one
-
-#exit 1 -> Fehler - also keine assertions
-
-#sleep 1s
-#
-#docker logs chatty-client-two
-
-#if docker logs chatty-client | grep -q ' andi~ test';
-#then
-#  echo "matched"
-#else
-#  echo "no match"
-#  exit 1
-#fi
-
 ############
 ### main ###
 ############
@@ -102,5 +63,5 @@ sendMessageViaClient "automated message from first client - yeah" chatty-client-
 sendMessageViaClient "automated message from second client - double yeah" chatty-client-two
 sleep 1s
 
-verifySentMessage " automated message from first client - yeah" chatty-client-two
-verifySentMessage " automated message from second client - double yeah" chatty-client-one
+verifySentMessage " automated user 1~ automated message from first client - yeah" chatty-client-two
+verifySentMessage " automated user 2~ automated message from second client - double yeah" chatty-client-one

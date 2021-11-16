@@ -103,7 +103,6 @@ jobs:
 
       - name: Setup testing environment
         run: |
-          chmod a+rwx integration-test.sh
-          ./integration-test.sh
-
-# socat command possibly
+          cd ./integration-test
+          chmod a+rwx chatting-test.sh
+          ./integration-test/chatting-test.sh
