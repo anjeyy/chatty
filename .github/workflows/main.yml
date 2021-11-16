@@ -88,7 +88,6 @@ jobs:
           push: true
           no-cache: true
 
-  #todo create ci docker image for testing purpose only (from same artifact)
   run-integration-tests:
     name: Run Integration Tests
     runs-on: ubuntu-latest

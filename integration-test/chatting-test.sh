@@ -8,6 +8,7 @@ set -e
 ### functions ###
 #################
 
+#todo create ci docker image for testing purpose only (from same artifact)
 function createAndStartServer() {
     docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
     sleep 10s
@@ -40,7 +41,7 @@ function verifySentMessage() {
     DOCKER_IMAGE=$2
     if docker logs "$DOCKER_IMAGE" | grep -q "$MESSAGE_TO_VERIFY";
     then
-      echo "~~~ Success - message was verified! ~~~"
+      echo "~~~ Success - message was verified for $DOCKER_IMAGE ! ~~~"
     else
       echo "~~~ ERROR: An error occurred during verification, for details please see in the logs. ~~~"
       exit 1
@@ -63,5 +64,5 @@ sendMessageViaClient "automated message from first client - yeah" chatty-client-
 sendMessageViaClient "automated message from second client - double yeah" chatty-client-two
 sleep 1s
 
-verifySentMessage " automated user 1~ automated message from first client - yeah" chatty-client-two
+verifySentMessage "  automated user 1~ automated message from first client - yeah" chatty-client-two
 verifySentMessage " automated user 2~ automated message from second client - double yeah" chatty-client-one
