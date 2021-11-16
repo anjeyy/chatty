@@ -94,15 +94,19 @@ jobs:
     #    needs:
     #      - push-server-to-registry
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
       - name: Setup testing environment
         run: |
-          docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
-          sleep 5
-          docker logs chatty-server
-          docker run -d --name chatty-client --network="host" -it anjeyy/chatty:client-latest
-          sleep 5
-          docker logs chatty-client
+          ./integration-test.sh
+          #          docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
+          #          sleep 10s
+          #          docker logs chatty-server
+          #          docker run -d --name chatty-client --network="host" -it anjeyy/chatty:client-latest
+          #          sleep 10s
+          #          docker logs chatty-client
           #todo create test
-          #docker exec -it chatty-client /bin/sh
+        #docker exec -it chatty-client /bin/sh
 
 # socat command possibly
