@@ -36,7 +36,7 @@ function sendMessageViaClient() {
   docker logs "$DOCKER_IMAGE"
 }
 
-function verifySentMessage() {
+function verifyMessage() {
     MESSAGE_TO_VERIFY=$1
     DOCKER_IMAGE=$2
     if docker logs "$DOCKER_IMAGE" | grep -q "$MESSAGE_TO_VERIFY";
@@ -58,15 +58,8 @@ sleep 1s
 docker logs chatty-client
 
 createAndStartServer
-sleep 2s
 docker logs chatty-client
-
-#setUsernameForClient "automated user 2" chatty-client-two
-#sleep 5s
-#
-#sendMessageViaClient "automated message from first client - yeah" chatty-client-one
-#sendMessageViaClient "automated message from second client - double yeah" chatty-client-two
-#sleep 1s
-#
-#verifySentMessage " automated user 1~ automated message from first client - yeah" chatty-client-two
-#verifySentMessage " automated user 2~ automated message from second client - double yeah" chatty-client-one
+echo "----------------------------"
+verifyMessage "Waiting 2 s for another retry.. (1/5)" chatty-client
+verifyMessage "Waiting 2 s for another retry.. (2/5)" chatty-client
+verifyMessage "Waiting 2 s for another retry.. (3/5)" chatty-client
