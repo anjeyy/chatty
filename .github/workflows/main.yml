@@ -88,6 +88,7 @@ jobs:
           push: true
           no-cache: true
 
+  #todo create ci docker image for testing purpose only (from same artifact)
   run-integration-tests:
     name: Run Integration Tests
     runs-on: ubuntu-latest
@@ -101,13 +102,5 @@ jobs:
         run: |
           chmod a+rwx integration-test.sh
           ./integration-test.sh
-          #          docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
-          #          sleep 10s
-          #          docker logs chatty-server
-          #          docker run -d --name chatty-client --network="host" -it anjeyy/chatty:client-latest
-          #          sleep 10s
-          #          docker logs chatty-client
-          #todo create test
-        #docker exec -it chatty-client /bin/sh
 
 # socat command possibly
