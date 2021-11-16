@@ -50,19 +50,28 @@ function verifyMessage() {
 ### main ###
 ############
 
-# given
+# given established connection
 createAndStartServer
 createAndStartClient chatty-client
 setUsernameForClient "automated user 1" chatty-client
+verifyMessage "Have fun automated user 1, but don't go too wild." chatty-client
+verifyMessage "~~ Connection to the Chatroom established. ~~" chatty-client
+verifyMessage "~~ Say hi to the others. ~~" chatty-client
 
-# when
+# when server suddenly crashes
 docker stop chatty-server
 sleep 2s
 docker logs chatty-client
+verifyMessage "~~ Connection to the Chatroom lost. ~~" chatty-client
+verifyMessage "~~ Enter a message trying to reconnect and send that message. ~~" chatty-client
+sendMessageViaClient "trigger reconnect" chatty-client
+docker start chatty-server
 
-#echo "-------------------- Verification --------------------"
-#verifyMessage "Waiting 2 s for another retry.. (1/5)" chatty-client
-#verifyMessage "Waiting 2 s for another retry.. (2/5)" chatty-client
-#verifyMessage "Waiting 2 s for another retry.. (3/5)" chatty-client
-#verifyMessage "Waiting 2 s for another retry.. (4/5)" chatty-client
+# then
+docker logs chatty-client
+echo "-------------------- Verification --------------------"
+verifyMessage "Waiting 2 s for another retry.. (1/5)" chatty-client
+verifyMessage "Waiting 2 s for another retry.. (2/5)" chatty-client
+verifyMessage "Waiting 2 s for another retry.. (3/5)" chatty-client
+verifyMessage "Waiting 2 s for another retry.. (4/5)" chatty-client
 
