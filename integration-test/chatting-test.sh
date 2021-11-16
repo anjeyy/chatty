@@ -38,7 +38,7 @@ function sendMessageViaClient() {
 function verifySentMessage() {
     MESSAGE_TO_VERIFY=$1
     DOCKER_IMAGE=$2
-    if docker logs chatty-client | grep -q "$MESSAGE_TO_VERIFY";
+    if docker logs "$DOCKER_IMAGE" | grep -q "$MESSAGE_TO_VERIFY";
     then
       echo "~~~ Success - message was verified! ~~~"
     else

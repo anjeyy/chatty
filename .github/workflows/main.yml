@@ -101,7 +101,7 @@ jobs:
       - name: Install socat
         run: sudo apt-get install socat
 
-      - name: Setup testing environment
+      - name: Chatting test (with two clients)
         run: |
           cd ./integration-test
           chmod a+rwx chatting-test.sh
