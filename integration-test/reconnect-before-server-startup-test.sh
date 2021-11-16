@@ -17,7 +17,7 @@ function createAndStartServer() {
 
 function createAndStartClient() {
   DOCKER_NAME=$1
-  docker run -d -e websocket.retry_timeout=1000 --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-latest
+  docker run -d -e websocket.retry_timeout=2500 --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-latest
   sleep 10s
   docker logs "$DOCKER_NAME"
 }
@@ -53,15 +53,12 @@ function verifySentMessage() {
 ############
 
 createAndStartClient chatty-client
-
 setUsernameForClient "automated user 1" chatty-client
-
-sleep 1.5s
+sleep 1s
 docker logs chatty-client
 
 createAndStartServer
-
-sleep 5s
+sleep 2s
 docker logs chatty-client
 
 #setUsernameForClient "automated user 2" chatty-client-two
