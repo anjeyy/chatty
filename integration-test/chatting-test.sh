@@ -48,6 +48,12 @@ function verifyMessage() {
     fi
 }
 
+function cleanup() {
+    docker rm -f chatty-server
+    docker rm -f chatty-client-one
+    docker rm -f chatty-client-two
+}
+
 ############
 ### main ###
 ############
@@ -74,3 +80,5 @@ sleep 1s
 # verify received message from other client
 verifyMessage " automated user 1~ automated message from first client - yeah" chatty-client-two
 verifyMessage " automated user 2~ automated message from second client - double yeah" chatty-client-one
+
+cleanup

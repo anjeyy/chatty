@@ -46,6 +46,12 @@ function verifyMessage() {
     fi
 }
 
+function cleanup() {
+    docker rm -f chatty-server
+    docker rm -f chatty-client
+}
+
+
 ############
 ### main ###
 ############
@@ -67,3 +73,4 @@ verifyMessage "Waiting 2 s for another retry.. (4/5)" chatty-client
 verifyMessage "~~ Connection to the Chatroom established. ~~" chatty-client
 verifyMessage "~~ Say hi to the others. ~~" chatty-client
 
+cleanup
