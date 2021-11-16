@@ -105,3 +105,9 @@ jobs:
           cd ./integration-test
           chmod a+rwx chatting-test.sh
           ./chatting-test.sh
+
+      - name: Client reconnect before server startup test
+        run: |
+          cd ./integration-test
+          chmod a+rwx reconnect-before-server-startup-test.sh
+          ./reconnect-before-server-startup-test.sh
