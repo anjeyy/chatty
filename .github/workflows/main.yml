@@ -136,6 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build-jar
+      - run-integration-tests
 
     if: github.event.pull_request.merged
     steps:
