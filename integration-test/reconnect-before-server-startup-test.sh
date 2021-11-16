@@ -50,9 +50,12 @@ function verifyMessage() {
 ### main ###
 ############
 
+# create and try to connect with client - reconnect triggered
 createAndStartClient chatty-client
 setUsernameForClient "automated user 1" chatty-client
 sleep 1s
+
+# start server - client can connect to server now
 createAndStartServer
 docker logs chatty-client
 

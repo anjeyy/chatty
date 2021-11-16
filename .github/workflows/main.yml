@@ -100,17 +100,17 @@ jobs:
       - name: Install socat
         run: sudo apt-get install socat
 
-          #      - name: Integration Test - Chatting test (with two clients)
-          #        run: |
-          #          cd ./integration-test
-          #          chmod a+rwx chatting-test.sh
-          #          ./chatting-test.sh
+      - name: Integration Test - Chatting test (with two clients)
+        run: |
+          cd ./integration-test
+          chmod a+rwx chatting-test.sh
+          ./chatting-test.sh
 
-          #      - name: Integration Test - Client reconnect BEFORE server startup
-          #        run: |
-          #          cd ./integration-test
-          #          chmod a+rwx reconnect-before-server-startup-test.sh
-        #          ./reconnect-before-server-startup-test.sh
+      - name: Integration Test - Client reconnect BEFORE server startup
+        run: |
+          cd ./integration-test
+          chmod a+rwx reconnect-before-server-startup-test.sh
+          ./reconnect-before-server-startup-test.sh
 
       - name: Integration Test - Client reconnect AFTER server crashes
         run: |
