@@ -105,4 +105,4 @@ jobs:
         run: |
           cd ./integration-test
           chmod a+rwx chatting-test.sh
-          ./integration-test/chatting-test.sh
+          ./chatting-test.sh
