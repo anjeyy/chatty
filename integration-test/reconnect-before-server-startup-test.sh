@@ -2,8 +2,6 @@
 
 set -e
 
-#todo reconnect feature testing (both ways!!)
-
 #################
 ### functions ###
 #################
@@ -41,7 +39,7 @@ function verifyMessage() {
     DOCKER_IMAGE=$2
     if docker logs "$DOCKER_IMAGE" | grep -q "$MESSAGE_TO_VERIFY";
     then
-      echo "~~~ Success - message was verified for '$DOCKER_IMAGE' ! ~~~"
+      echo "~~~ Success - message '$MESSAGE_TO_VERIFY' was verified for '$DOCKER_IMAGE' ! ~~~"
     else
       echo "~~~ ERROR: An error occurred during '$DOCKER_IMAGE' verification , for details please see in the logs. ~~~"
       exit 1
@@ -55,11 +53,12 @@ function verifyMessage() {
 createAndStartClient chatty-client
 setUsernameForClient "automated user 1" chatty-client
 sleep 1s
-docker logs chatty-client
-
 createAndStartServer
 docker logs chatty-client
-echo "----------------------------"
+
+echo "-------------------- Verification --------------------"
 verifyMessage "Waiting 2 s for another retry.. (1/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (2/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (3/5)" chatty-client
+verifyMessage "Waiting 2 s for another retry.. (4/5)" chatty-client
+
