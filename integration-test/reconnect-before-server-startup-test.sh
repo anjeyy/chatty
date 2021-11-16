@@ -52,7 +52,7 @@ function verifySentMessage() {
 ### main ###
 ############
 
-createAndStartClient chatty-client-one
+createAndStartClient chatty-client
 
 setUsernameForClient "automated user 1" chatty-client
 
