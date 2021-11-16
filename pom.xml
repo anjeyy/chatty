@@ -84,12 +84,6 @@
             <artifactId>testcontainers</artifactId>
             <scope>test</scope>
             <version>${testcontainer.version}</version>
-            <!--            <exclusions>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>junit</groupId>-->
-            <!--                    <artifactId>junit</artifactId>-->
-            <!--                </exclusion>-->
-            <!--            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
