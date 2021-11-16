@@ -85,3 +85,19 @@ jobs:
           pull: true
           push: true
           no-cache: true
+
+  run-integration-tests:
+    name: Run Integration Tests
+    runs-on: ubuntu-latest
+    #    needs:
+    #      - push-server-to-registry
+    steps:
+      - name: Setup testing environment
+        run: |
+          docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
+          docker logs chatty-server
+          docker run -d --name chatty-client --network="host" -it anjeyy/chatty:client-latest
+          docker logs chatty-client
+          docker exec -it chatty-client /bin/sh
+
+# socat command possibly

@@ -1,4 +1,19 @@
+spring:
+  application:
+    name: chat-client
+  main:
+    web-application-type: none
+    banner-mode: off
+
 logging:
+  file:
+    name: ./log/${spring.application.name}
   level:
     root: WARN
 
+websocket:
+  url: ws://localhost:8080/chat
+  destination: /app/chat
+  subscription: /topic/chat
+  retry-attempts: 5
+  retry-timeout: 30000
