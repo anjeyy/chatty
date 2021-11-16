@@ -34,9 +34,11 @@ In order to start the client:
 Two snippets displaying the use of two clients and chatting with each other.
 
 **Client One**
+
 ![img.png](docs/client-one.png)
 
 **Client Two**
+
 ![img.png](docs/client-two.png)
 
 # technical overview
