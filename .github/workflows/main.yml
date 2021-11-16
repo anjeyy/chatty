@@ -98,6 +98,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Install socat
+        run: sudo apt-get install socat
+
       - name: Setup testing environment
         run: |
           chmod a+rwx integration-test.sh
