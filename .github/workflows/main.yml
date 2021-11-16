@@ -98,6 +98,6 @@ jobs:
           docker logs chatty-server
           docker run -d --name chatty-client --network="host" -it anjeyy/chatty:client-latest
           docker logs chatty-client
-          docker exec -it chatty-client /bin/sh
+          #docker exec -it chatty-client /bin/sh
 
 # socat command possibly
