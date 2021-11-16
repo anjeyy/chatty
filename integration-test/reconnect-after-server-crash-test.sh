@@ -6,16 +6,15 @@ set -e
 ### functions ###
 #################
 
-#todo create ci docker image for testing purpose only (from same artifact)
 function createAndStartServer() {
-    docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
+    docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-ci-latest
     sleep 10s
     docker logs chatty-server
 }
 
 function createAndStartClient() {
   DOCKER_NAME=$1
-  docker run -d -e websocket.retry_timeout=2500 --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-latest
+  docker run -d -e websocket.retry_timeout=2500 --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-ci-latest
   sleep 10s
   docker logs "$DOCKER_NAME"
 }

@@ -2,22 +2,19 @@
 
 set -e
 
-#todo reconnect feature testing (both ways!!)
-
 #################
 ### functions ###
 #################
 
-#todo create ci docker image for testing purpose only (from same artifact)
 function createAndStartServer() {
-    docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
+    docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-ci-latest
     sleep 10s
     docker logs chatty-server
 }
 
 function createAndStartClient() {
   DOCKER_NAME=$1
-  docker run -d --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-latest
+  docker run -d --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-ci-latest
   sleep 10s
   docker logs "$DOCKER_NAME"
 }

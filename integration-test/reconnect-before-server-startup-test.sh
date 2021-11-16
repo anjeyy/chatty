@@ -6,16 +6,15 @@ set -e
 ### functions ###
 #################
 
-#todo create ci docker image for testing purpose only (from same artifact)
 function createAndStartServer() {
-    docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-latest
+    docker run -d -p 8080:8080 --name chatty-server anjeyy/chatty:server-ci-latest
     sleep 10s
     docker logs chatty-server
 }
 
 function createAndStartClient() {
   DOCKER_NAME=$1
-  docker run -d -e websocket.retry_timeout=2500 --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-latest
+  docker run -d -e websocket.retry_timeout=2500 --name "$DOCKER_NAME" --network="host" -it anjeyy/chatty:client-ci-latest
   sleep 10s
   docker logs "$DOCKER_NAME"
 }
@@ -69,7 +68,6 @@ echo "-------------------- Verification --------------------"
 verifyMessage "Waiting 2 s for another retry.. (1/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (2/5)" chatty-client
 verifyMessage "Waiting 2 s for another retry.. (3/5)" chatty-client
-verifyMessage "Waiting 2 s for another retry.. (4/5)" chatty-client
 verifyMessage "~~ Connection to the Chatroom established. ~~" chatty-client
 verifyMessage "~~ Say hi to the others. ~~" chatty-client
 
